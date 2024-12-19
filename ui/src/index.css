@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Press_Start_2P";
+  font-size:xx-small;
+  src: url("/fonts/PressStart2P-Regular.ttf") format("truetype");
+}
+
+:root {
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#logo-title {
+  font-family: "Press_Start_2P";
+}
+
+#root {
+  min-width: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.bubble {
+  color: white;
+  font-weight: 700;
+	position: relative;
+	display: inline-block;
+	margin: 5*4px;
+	text-align: center;
+	font-family: "Press_Start_2P";
+	font-size: 9px;
+	color: #ffffff;
+	box-sizing: border-box;
+  padding: .3em 1em .3em 1em;
+}
+
+#common {
+  background-color: #0093FF;
+	box-shadow: 0 -4px #0093FF, 0 -8px #0093FF, 4px 0 #0093FF, 4px -4px #0093FF, 8px 0 #0093FF, 0 4px #0093FF, 0 8px #0093FF, -4px 0 #0093FF, -4px 4px #0093FF, -8px 0 #0093FF, -4px -4px #0093FF, 4px 4px #0093FF;
+}
+
+#rare {
+  background-color: #FF4C40;
+	box-shadow: 0 -4px #FF4C40, 0 -8px #FF4C40, 4px 0 #FF4C40, 4px -4px #FF4C40, 8px 0 #FF4C40, 0 4px #FF4C40, 0 8px #FF4C40, -4px 0 #FF4C40, -4px 4px #FF4C40, -8px 0 #FF4C40, -4px -4px #FF4C40, 4px 4px #FF4C40;
+}
+
+#uncommon {
+  background-color: #35BD86;
+	box-shadow: 0 -4px #35BD86, 0 -8px #35BD86, 4px 0 #35BD86, 4px -4px #35BD86, 8px 0 #35BD86, 0 4px #35BD86, 0 8px #35BD86, -4px 0 #35BD86, -4px 4px #35BD86, -8px 0 #35BD86, -4px -4px #35BD86, 4px 4px #35BD86;
+}
+
+#legendary {
+  background-color: #AB5BB5;
+	box-shadow: 0 -4px #AB5BB5, 0 -8px #AB5BB5, 4px 0 #AB5BB5, 4px -4px #AB5BB5, 8px 0 #AB5BB5, 0 4px #AB5BB5, 0 8px #AB5BB5, -4px 0 #AB5BB5, -4px 4px #AB5BB5, -8px 0 #AB5BB5, -4px -4px #AB5BB5, 4px 4px #AB5BB5;  
+}
