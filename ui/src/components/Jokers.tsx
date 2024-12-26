@@ -1,30 +1,53 @@
-import type { Joker, RarityT } from "../types";
-import { useInView } from "react-intersection-observer";
+import type { Joker, WeightedAttr } from "../types";
+// import { useInView } from "react-intersection-observer";
 import { capitalize } from "../lib/misc";
 import { JokerType } from "../types";
 import { Checkbox } from "./Checkbox";
 import { Earn, getTypeHtml } from "./Enhancements";
 import { useFetch } from "../lib/query";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { apiRoutes } from "../siteConfig";
+import {
+  ItemsContainer,
+  ItemsTable,
+  ItemsTitle,
+  sortAsc,
+  sortDesc,
+  SortingStateTypeMap,
+} from "./Items";
 
 export const Jokers = () => {
-  const [currentPage, setCurrentPage] = useState<number>(0);
-  const { ref, inView } = useInView({ threshold: 0 });
-  const { data: jokersData, refetch } = useFetch<any>(apiRoutes.jokers, {
-    currentPage,
-    itemsPerPage: 10,
-  });
-  const [data, setData] = useState<Joker[]>([]);
-  const title = "Jokers";
+  // const { ref, inView } = useInView({ threshold: 0 });
   const dataScheme = [
     "Joker",
     "Effect",
     "Cost",
     "Rarity",
-    "Unlock Requirement",
+    "Requirement",
     "Type",
   ];
+
+  const defaultSortingStates = new Array(dataScheme.length).fill(
+    SortingStateTypeMap.Neutral
+  );
+
+  const [sortingStates, setSortingStates] = useState(defaultSortingStates);
+
+  const { data: jokersData, isSuccess } = useFetch<any>(apiRoutes.jokers);
+
+  const [originalData, setOriginalData] = useState<Joker[]>([]);
+  const [data, setData] = useState<Joker[]>([]);
+  const title = "Jokers";
+
+  useEffect(() => {
+    if (originalData?.length) setData(originalData);
+  }, [originalData]);
+
+  useEffect(() => {
+    if (jokersData?.jokers) {
+      setOriginalData((data) => [...data, ...jokersData.jokers]);
+    }
+  }, [isSuccess]);
 
   useEffect(() => {
     if (jokersData?.jokers) {
@@ -33,7 +56,7 @@ export const Jokers = () => {
   }, [jokersData]);
 
   const CardImage = ({ src, alt }: { src: string; alt: string }) => {
-    return <img className="mx-auto w-24 h-32" src={src} alt={alt} />;
+    return <img className="mx-auto w-24 md:h-32" src={src} alt={alt} />;
   };
 
   const InsecureAttrTd = ({ value }: { value: string | TrustedHTML }) => {
@@ -45,17 +68,17 @@ export const Jokers = () => {
     );
   };
 
-  const RarityComponent = ({ value }: { value: RarityT }) => {
+  const RarityComponent = ({ rarity }: { rarity: WeightedAttr }) => {
     return (
       <td className="block md:table-cell px-6">
-        <span id={value} className="bubble">
-          {capitalize(value)}
+        <span id={rarity.value} className="bubble">
+          {capitalize(rarity.value)}
         </span>
       </td>
     );
   };
 
-  const jokerTypes: any = {
+  const jokerTypes: { [key: string]: string } = {
     "+c": "Chips Jokers",
     "+m": "Additive Mult Jokers",
     Xm: "Multiplicative Mult Jokers",
@@ -65,77 +88,102 @@ export const Jokers = () => {
     "+$": "Economy Jokers",
   };
 
-  useEffect(() => {
-    if (inView) {
-      setCurrentPage(currentPage + 1);
-      refetch();
-    }
-  }, [inView]);
+  // useEffect(() => {
+  //   if (inView) {
+  //     setCurrentPage(currentPage + 1);
+  //     refetch();
+  //   }
+  // }, [inView]);
 
-  return data && data.length ? (
-    <div className="flex flex-col w-full min-h-screen space-y-20">
+  const InfoJokerTypes = () => {
+    return (
       <ul className="space-x-8">
-        {Object.keys(jokerTypes).map((jtype: any) => (
-          <li className="space-x-2 inline-block float-left text-xs text-light-secondary dark:text-dark-gray">
+        {Object.keys(jokerTypes).map((jtype: any, idx: number) => (
+          <li
+            key={idx}
+            className="space-x-2 inline-block float-left text-xs text-light-secondary dark:text-dark-gray"
+          >
             <span dangerouslySetInnerHTML={{ __html: getTypeHtml(jtype) }} />
             <span>{jokerTypes[jtype]}</span>
           </li>
         ))}
       </ul>
-      <div className="text-center md:text-left">
-        <h1 className="text-lg font-bold text-light-secondary dark:text-dark-primary">
-          List of {title} ({data.length})
-        </h1>
-      </div>
-      <table className="table-auto text-light-secondary dark:text-dark-primary w-full relative rounded-xl bg-light-gray dark:bg-dark-secondary">
-        <thead className="hidden md:table-header-group">
-          <tr>
-            {[...dataScheme, "Checklist"].map((_title: string, idx: number) => (
-              <th
-                className="text-dark-gray sticky top-0 bg-light-gray dark:bg-dark-secondary h-20 z-10 px-10 rounded-xl"
-                key={idx}
-              >
-                {_title}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {data.map(
-            (
-              {
-                Image,
-                Name,
-                Effect,
-                Cost,
-                Rarity,
-                UnlockRequirement,
-                Type,
-              }: Joker,
-              idx: number
-            ) => (
-              <tr key={idx} className="block md:table-row">
-                <td className="py-4 w-full md:w-[14%] block md:table-cell">
-                  <CardImage src={Image} alt={Name} />
-                  <p
-                    className="mx-auto mt-2 md:mt-3 font-semibold text-light-secondary dark:text-dark-gray"
-                    dangerouslySetInnerHTML={{ __html: Name }}
-                  />
-                </td>
-                <InsecureAttrTd value={Effect} />
-                <InsecureAttrTd value={Earn(Cost as string)} />
-                <RarityComponent value={Rarity} />
-                <InsecureAttrTd value={UnlockRequirement} />
-                <InsecureAttrTd value={getTypeHtml(Type as JokerType)} />
-                <td className="block md:table-cell">
-                  <Checkbox checked={false} />
-                </td>
-              </tr>
-            )
-          )}
-        </tbody>
-        <div ref={ref}></div>
-      </table>
-    </div>
-  ) : null;
+    );
+  };
+
+  const updateSortingState = (idx: number) => {
+    const sortingStatesCopy = defaultSortingStates;
+    sortingStatesCopy[idx] = (sortingStates[idx] + 1) % 3;
+
+    setSortingStates(sortingStatesCopy);
+  };
+
+  useEffect(() => {
+    const sortingStateIdx = sortingStates.findIndex((i) => i != 0);
+
+    if (sortingStateIdx === -1) {
+      setData(originalData);
+      return;
+    }
+
+    const sortingState = sortingStates[sortingStateIdx];
+
+    switch (sortingState) {
+      case SortingStateTypeMap.Asc:
+        setData(sortAsc(dataScheme[sortingStateIdx], data));
+        return;
+
+      case SortingStateTypeMap.Desc:
+        setData(sortDesc(dataScheme[sortingStateIdx], data));
+        return;
+    }
+  }, [sortingStates]);
+
+  // TODO: display skeleton
+  if (!data?.length) return <>Loading...</>;
+  else
+    return (
+      <ItemsContainer>
+        <InfoJokerTypes />
+        <ItemsTitle title={title} totalItems={data.length} />
+        <ItemsTable
+          updateSortingState={updateSortingState}
+          sortingStates={sortingStates}
+          dataScheme={dataScheme}
+          body={
+            <Fragment>
+              {data.map(
+                (
+                  { Joker, Effect, Cost, Rarity, Requirement, Type }: Joker,
+                  idx: number
+                ) => (
+                  <tr
+                    key={idx}
+                    className="block lg:table-row odd:bg-light-white odd:dark:bg-dark-background"
+                  >
+                    <td className="py-4 w-full lg:w-[14%] block lg:table-cell">
+                      <CardImage src={Joker.image} alt={Joker.value} />
+                      <p
+                        className="mx-auto mt-2 lg:mt-3 font-semibold text-light-secondary dark:text-dark-gray"
+                        dangerouslySetInnerHTML={{ __html: Joker.value }}
+                      />
+                    </td>
+                    <InsecureAttrTd value={Effect?.value as string} />
+                    <InsecureAttrTd value={Earn(Cost?.value as string)} />
+                    <RarityComponent rarity={Rarity} />
+                    <InsecureAttrTd value={Requirement?.value as string} />
+                    <InsecureAttrTd
+                      value={getTypeHtml(Type?.value as JokerType)}
+                    />
+                    <td className="block lg:table-cell">
+                      <Checkbox checked={false} />
+                    </td>
+                  </tr>
+                )
+              )}
+            </Fragment>
+          }
+        />
+      </ItemsContainer>
+    );
 };

@@ -54,7 +54,7 @@ function App() {
         activeTab={activeTab}
         setActiveTab={updateActiveTab}
       />
-      {tabs[activeTab].content()}
+      <div className="min-h-screen">{tabs[activeTab].content()}</div>
       <Footer />
     </MainLayout>
   );

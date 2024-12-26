@@ -5,16 +5,23 @@ export type Tabs = 0 | 1 | 2;
 
 export type JokerType = "+c" | "+m" | "Xm" | "++" | "!!" | "..." | "+$";
 
-export type RarityT = "common" | "uncommon" | "rare" | "legendary";
+export interface WeightedAttr {
+  weight: number;
+  value: string;
+}
+
+interface JokerAttr extends WeightedAttr {
+  image: string;
+}
 
 export interface Joker {
-  Image: string;
-  Name: string;
-  Effect: string;
-  Cost: string;
-  Rarity: RarityT;
-  UnlockRequirement: string;
-  Type: string;
+  Joker: JokerAttr;
+  Name: WeightedAttr;
+  Effect: WeightedAttr;
+  Cost: WeightedAttr;
+  Rarity: WeightedAttr;
+  Requirement: WeightedAttr;
+  Type: WeightedAttr;
 }
 
 interface CardModifier {

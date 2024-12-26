@@ -12,19 +12,19 @@ import {
 
 export const getAllJokers = (req: Request, res: Response): void => {
   try {
-    const { currentPage = 0, itemsPerPage = 10 } = req.query;
-    let { title, dataScheme, data: _jokers }: any = getJokers();
-    const totalJokers = _jokers || [];
+    // const { currentPage = 0, itemsPerPage = 10 } = req.query;
+    let { title, dataScheme, data: jokers }: any = getJokers();
+    // const totalJokers = jokers || [];
 
-    const totalPages = Math.ceil(totalJokers.length / Number(itemsPerPage));
+    // const totalPages = Math.ceil(totalJokers.length / Number(itemsPerPage));
 
-    const startIndex = Number(currentPage) * Number(itemsPerPage);
-    const endIndex = startIndex + Number(itemsPerPage);
+    // const startIndex = Number(currentPage) * Number(itemsPerPage);
+    // const endIndex = startIndex + Number(itemsPerPage);
 
-    const jokers = totalJokers.slice(startIndex, endIndex);
+    // const _jokers = totalJokers.slice(startIndex, endIndex);
 
     res.status(200).send({
-      totalPages,
+      // totalPages,
       jokers,
     });
   } catch (err) {

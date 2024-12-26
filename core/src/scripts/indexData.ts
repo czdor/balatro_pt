@@ -44,7 +44,7 @@ export const createIndexes = async () => {
           Name: { type: "text", analyzer: "ngram_analyzer" },
           Effect: { type: "text", analyzer: "ngram_analyzer" },
           Cost: { type: "text", analyzer: "ngram_analyzer" },
-          Rarity: { type: "text", analyzer: "ngram_analyzer" },
+          // Rarity: { type: "text", analyzer: "ngram_analyzer" },
           UnlockRequirement: { type: "text", analyzer: "ngram_analyzer" },
           Type: { type: "text", analyzer: "ngram_analyzer" },
           Image: { type: "text" },

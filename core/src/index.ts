@@ -19,11 +19,11 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 // * delete existing indexes, create new ones for jokers and index data
-(async function () {
-  await deleteAllIndexes();
-  await createIndexes();
-  await indexData();
-})();
+// (async function () {
+//   await deleteAllIndexes();
+//   await createIndexes();
+//   await indexData();
+// })();
 
 app.use("/api/v1", routes);
 

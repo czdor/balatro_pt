@@ -1,6 +1,8 @@
+import { Fragment } from "react";
 import { useFetch } from "../lib/query";
 import { apiRoutes } from "../siteConfig";
 import type { Enhancement, Edition, Seal } from "../types";
+import { ItemsContainer, ItemsTable, ItemsTitle } from "./Items";
 
 const defaultData = {
   title: "",
@@ -29,7 +31,7 @@ export const Modifiers = () => {
 
   const {
     title: editionsTitle,
-    dataScheme: editionsDataScheme,
+    // dataScheme: editionsDataScheme,
     data: editionsData,
   } = editionsResponse?.editions || defaultData;
 
@@ -58,51 +60,39 @@ export const Modifiers = () => {
     );
   };
 
+  const editionsDataScheme = ["Appearance", "Edition", "Effect"];
+
   return (
-    <div className="flex flex-col w-full min-h-screen space-y-20">
-      <div className="text-center md:text-left">
-        <h1 className="text-lg font-bold text-light-secondary dark:text-dark-primary">
-          List of {editionsTitle} ({editionsData.length})
-        </h1>
-      </div>
-      <table className="table-auto text-light-secondary dark:text-dark-primary w-full relative rounded-xl bg-light-gray dark:bg-dark-secondary">
-        <thead className="hidden md:table-header-group">
-          <tr>
-            {[...editionsDataScheme, "Checklist"].map(
-              (_title: string, idx: number) => (
-                <th
-                  className="text-dark-gray sticky top-0 bg-light-gray dark:bg-dark-secondary h-20 z-10 px-10 rounded-xl"
-                  key={idx}
-                >
-                  {_title}
-                </th>
+    <ItemsContainer>
+      <ItemsTitle title={editionsTitle} totalItems={editionsData.length} />
+      <ItemsTable
+        updateSortingState={() => {}}
+        sortingStates={[]}
+        dataScheme={editionsDataScheme}
+        body={
+          <Fragment>
+            {editionsData.map(
+              ({ Appearance, Edition, Effect }: Edition, idx: number) => (
+                <tr key={idx} className="block md:table-row">
+                  <td className="py-4 w-full md:w-[14%] block md:table-cell">
+                    <CardImage src={Appearance} alt={Edition} />
+                  </td>
+                  <InsecureAttrTd value={Edition} />
+                  <InsecureAttrTd value={Effect} />
+                  <td className="block md:table-cell">
+                    <input
+                      // checked={dataObj.checked ?? false}
+                      type="checkbox"
+                      name="Add"
+                      id=""
+                    />
+                  </td>
+                </tr>
               )
             )}
-          </tr>
-        </thead>
-        <tbody>
-          {editionsData.map(
-            ({ Appearance, Edition, Effect }: Edition, idx: number) => (
-              <tr key={idx} className="block md:table-row">
-                <td className="py-4 w-full md:w-[14%] block md:table-cell">
-                  <CardImage src={Appearance} alt={Edition} />
-                </td>
-                <InsecureAttrTd value={Edition} />
-                <InsecureAttrTd value={Effect} />
-                <td className="block md:table-cell">
-                  <input
-                    // checked={dataObj.checked ?? false}
-                    type="checkbox"
-                    name="Add"
-                    id=""
-                  />
-                </td>
-              </tr>
-            )
-          )}
-        </tbody>
-      </table>
-
+          </Fragment>
+        }
+      />
       <div className="text-center md:text-left">
         <h1 className="text-lg font-bold text-light-secondary dark:text-dark-primary">
           List of {enhancementsTitle} ({enhancementsData.length})
@@ -186,6 +176,6 @@ export const Modifiers = () => {
           ))}
         </tbody>
       </table>
-    </div>
+    </ItemsContainer>
   );
 };

@@ -59,7 +59,7 @@ export const Consumables = () => {
   };
 
   return (
-    <div className="flex flex-col w-full min-h-screen space-y-20">
+    <div className="flex flex-col w-full min-h-screen space-y-10">
       <div className="text-center md:text-left">
         <h1 className="text-lg font-bold text-light-secondary dark:text-dark-primary">
           List of {spectralTitle} ({spectralData.length})
