@@ -3,6 +3,7 @@ import { useTheme } from "../hooks/useTheme";
 import { useState } from "react";
 import { capitalize } from "../lib/misc";
 import { Check, Moon, Sun } from "./icons";
+import useClickOutside from "../hooks/useClickOutside";
 
 export function ThemeToggle() {
   const [currentTheme, setTheme] = useTheme();
@@ -39,8 +40,10 @@ export function ThemeToggle() {
     );
   };
 
+  const ref: any = useClickOutside(() => setDisplayThemesDropdown(false));
+
   return currentTheme ? (
-    <div>
+    <div ref={ref}>
       <button
         id="dropdownDefaultButton"
         data-dropdown-toggle="dropdown"

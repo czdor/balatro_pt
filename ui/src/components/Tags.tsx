@@ -1,7 +1,12 @@
+import { Fragment, useEffect, useState } from "react";
 import { useFetch } from "../lib/query";
 import { apiRoutes } from "../siteConfig";
-import type { Tag, TagsT } from "../types";
+import type { TagsT } from "../types";
 import { Checkbox } from "./Checkbox";
+import { ItemsContainer, ItemsTable, ItemsTableRow, ItemsTitle } from "./Items";
+import { TagImage } from "./TagImage";
+import { InsecureAttrTd } from "./InsecureAttrTd";
+import { useSorting } from "../hooks/useSorting";
 
 const defaultData = {
   title: "",
@@ -10,69 +15,73 @@ const defaultData = {
 };
 
 export const Tags = () => {
+  const tagsTitle = "Tags";
+  const tagsDataScheme = ["Tag", "Benefit", "Notes", "Ante"];
+
   const {
     data: tagsResponse,
     isLoading: tagsLoading,
     error: tagsError,
+    isSuccess,
   } = useFetch<any>(apiRoutes.tags);
 
-  const { title, dataScheme, data }: TagsT = tagsResponse?.tags || defaultData;
+  const { data: tagsData }: TagsT = tagsResponse?.tags || defaultData;
 
-  const TagImage = ({ src, alt }: { src: string; alt: string }) => {
-    return <img className="mx-auto w-12 h-12" src={src} alt={alt} />;
-  };
+  const [data, setData] = useState<any[]>([]);
+  const [originalData, setOriginalData] = useState<any[]>([]);
 
-  const InsecureAttrTd = ({ value }: { value: string | TrustedHTML }) => {
-    return (
-      <td
-        className="block md:table-cell px-6"
-        dangerouslySetInnerHTML={{ __html: value }}
-      />
-    );
-  };
+  useEffect(() => {
+    if (originalData?.length) setData(originalData);
+  }, [originalData]);
+
+  useEffect(() => {
+    if (tagsData?.length) {
+      setOriginalData((data) => [...data, ...tagsData]);
+    }
+  }, [isSuccess]);
+
+  useEffect(() => {
+    if (tagsData?.length) {
+      setData((data) => [...data, ...tagsData]);
+    }
+  }, [tagsData]);
+
+  const {
+    sortingStates,
+    updateSortingState,
+    data: updatedData,
+  } = useSorting(Object.values(tagsDataScheme), originalData);
+
+  useEffect(() => {
+    setData(updatedData);
+  }, [updatedData]);
 
   return (
-    <div className="flex flex-col w-full min-h-screen space-y-10">
-      <div className="text-center md:text-left">
-        <h1 className="text-lg font-bold text-light-secondary dark:text-dark-primary">
-          List of {title} ({data.length})
-        </h1>
-      </div>
-      <table className="table-auto text-light-secondary dark:text-dark-primary w-full relative rounded-xl bg-light-gray dark:bg-dark-secondary">
-        <thead className="hidden md:table-header-group">
-          <tr>
-            {[...dataScheme, "Checklist"].map((_title: string, idx: number) => (
-              <th
-                className="text-dark-gray sticky top-0 bg-light-gray dark:bg-dark-secondary h-20 z-10 px-10 rounded-xl"
-                key={idx}
-              >
-                {_title}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {data.map(
-            ({ Image, Tag, Benefit, Notes, Ante }: Tag, idx: number) => (
-              <tr key={idx} className="block md:table-row">
+    <ItemsContainer>
+      <ItemsTitle title={tagsTitle} totalItems={tagsData.length} />
+      <ItemsTable
+        updateSortingState={updateSortingState}
+        sortingStates={sortingStates}
+        dataScheme={tagsDataScheme}
+        body={
+          <Fragment>
+            {data.map(({ Tag, Benefit, Notes, Ante }: any, idx: number) => (
+              <ItemsTableRow idx={idx}>
                 <td className="py-4 w-full md:w-[14%] block md:table-cell">
-                  <TagImage src={Image} alt={Tag} />
+                  <TagImage src={Tag.image} alt={Tag.value} />
                   <p
                     className="mx-auto mt-2 md:mt-3 font-semibold text-light-secondary dark:text-dark-gray"
-                    dangerouslySetInnerHTML={{ __html: Tag }}
+                    dangerouslySetInnerHTML={{ __html: Tag.value }}
                   />
                 </td>
-                <InsecureAttrTd value={Benefit} />
-                <InsecureAttrTd value={Notes} />
-                <InsecureAttrTd value={Ante} />
-                <td className="block md:table-cell">
-                  <Checkbox checked={false} />
-                </td>
-              </tr>
-            )
-          )}
-        </tbody>
-      </table>
-    </div>
+                <InsecureAttrTd value={Benefit.value} />
+                <InsecureAttrTd value={Notes.value} />
+                <InsecureAttrTd value={Ante.value} />
+              </ItemsTableRow>
+            ))}
+          </Fragment>
+        }
+      />
+    </ItemsContainer>
   );
 };

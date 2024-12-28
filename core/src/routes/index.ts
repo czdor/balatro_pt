@@ -12,7 +12,7 @@ import {
   getAllTarotCards,
 } from "../controllers/cards.controller";
 
-import { searchJokers } from "../controllers/search.controller";
+import { getSearchResult } from "../controllers/search.controller";
 
 // Jokers
 router.get("/jokers", getAllJokers);
@@ -31,6 +31,6 @@ router.get("/consumables/tarot", getAllTarotCards);
 router.get("/consumables/spectral", getAllSpectralCards);
 
 // Search
-router.get("/search/jokers", searchJokers);
+router.get("/search", getSearchResult);
 
 export default router;

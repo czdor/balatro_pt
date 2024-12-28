@@ -1,5 +1,6 @@
 export const coreApiUrl = "http://localhost:8000/api/v1";
 export const apiRoutes = {
+  search: "/search",
   jokers: "/jokers",
   tags: "/tags",
   consumables: {

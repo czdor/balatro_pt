@@ -29,7 +29,7 @@ interface CardModifier {
   Effect: string;
 }
 export interface Edition extends CardModifier {
-  Edition: string;
+  Edition: WeightedAttr;
 }
 
 export interface Enhancement extends CardModifier {

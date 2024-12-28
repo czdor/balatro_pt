@@ -16,7 +16,6 @@ export default {
           metal: '#818EA0',
           gray: '#F1F5F9', // secondary background
           white: "#FFFFFF", // text
-          white: "#FFFFFF", // secondary text
         },
         dark: {
           background: '#202634',

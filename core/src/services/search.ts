@@ -1,25 +1,44 @@
+import { indexDataMappings, indexTitleMapping } from "../scripts/dataMappings";
 import { client } from "../lib/elasticSearch";
+
+const searchLimit = 25;
+
+const fields = indexDataMappings.reduce((accum: any, curr: any) => {
+  const properties = Object.keys(curr.properties);
+  for (let i = 0; i < properties.length; i++) {
+    properties[i] = properties[i] + ".value";
+  }
+
+  return accum.concat(properties);
+}, []);
 
 export const search = async (query: string) => {
   const { hits } = await client.search({
-    index: "jokers",
+    index: "*",
     body: {
       query: {
         multi_match: {
           query,
-          fields: [
-            "Name",
-            "Effect",
-            "Cost",
-            "Rarity",
-            "UnlockRequirement",
-            "Type",
-          ],
+          fields,
           fuzziness: "AUTO", // Enables fuzzy search
         },
       },
+      size: searchLimit,
     },
   });
 
-  return hits.hits.map((hit) => hit._source);
+  const data: any = {};
+
+  hits.hits.map(({ _index, _source }) => {
+    // @ts-ignore
+    const category = indexTitleMapping[_index];
+
+    if (!Object.keys(data).includes(category)) {
+      data[category] = [];
+    }
+
+    data[category].push(_source);
+  });
+
+  return data;
 };

@@ -4,7 +4,7 @@
 
 @font-face {
   font-family: "Press_Start_2P";
-  font-size:xx-small;
+  font-size: xx-small;
   src: url("/fonts/PressStart2P-Regular.ttf") format("truetype");
 }
 
@@ -29,33 +29,70 @@
 .bubble {
   color: white;
   font-weight: 700;
-	position: relative;
-	display: inline-block;
-	margin: 5*4px;
-	text-align: center;
-	font-family: "Press_Start_2P";
-	font-size: 9px;
-	color: #ffffff;
-	box-sizing: border-box;
-  padding: .3em 1em .3em 1em;
+  position: relative;
+  display: inline-block;
+  margin: 5 * 4px;
+  text-align: center;
+  font-family: "Press_Start_2P";
+  font-size: 9px;
+  color: #ffffff;
+  box-sizing: border-box;
+  padding: 0.3em 1em 0.3em 1em;
 }
 
 #common {
-  background-color: #0093FF;
-	box-shadow: 0 -4px #0093FF, 0 -8px #0093FF, 4px 0 #0093FF, 4px -4px #0093FF, 8px 0 #0093FF, 0 4px #0093FF, 0 8px #0093FF, -4px 0 #0093FF, -4px 4px #0093FF, -8px 0 #0093FF, -4px -4px #0093FF, 4px 4px #0093FF;
+  background-color: #0093ff;
+  box-shadow: 0 -4px #0093ff, 0 -8px #0093ff, 4px 0 #0093ff, 4px -4px #0093ff,
+    8px 0 #0093ff, 0 4px #0093ff, 0 8px #0093ff, -4px 0 #0093ff,
+    -4px 4px #0093ff, -8px 0 #0093ff, -4px -4px #0093ff, 4px 4px #0093ff;
 }
 
 #rare {
-  background-color: #FF4C40;
-	box-shadow: 0 -4px #FF4C40, 0 -8px #FF4C40, 4px 0 #FF4C40, 4px -4px #FF4C40, 8px 0 #FF4C40, 0 4px #FF4C40, 0 8px #FF4C40, -4px 0 #FF4C40, -4px 4px #FF4C40, -8px 0 #FF4C40, -4px -4px #FF4C40, 4px 4px #FF4C40;
+  background-color: #ff4c40;
+  box-shadow: 0 -4px #ff4c40, 0 -8px #ff4c40, 4px 0 #ff4c40, 4px -4px #ff4c40,
+    8px 0 #ff4c40, 0 4px #ff4c40, 0 8px #ff4c40, -4px 0 #ff4c40,
+    -4px 4px #ff4c40, -8px 0 #ff4c40, -4px -4px #ff4c40, 4px 4px #ff4c40;
 }
 
 #uncommon {
-  background-color: #35BD86;
-	box-shadow: 0 -4px #35BD86, 0 -8px #35BD86, 4px 0 #35BD86, 4px -4px #35BD86, 8px 0 #35BD86, 0 4px #35BD86, 0 8px #35BD86, -4px 0 #35BD86, -4px 4px #35BD86, -8px 0 #35BD86, -4px -4px #35BD86, 4px 4px #35BD86;
+  background-color: #35bd86;
+  box-shadow: 0 -4px #35bd86, 0 -8px #35bd86, 4px 0 #35bd86, 4px -4px #35bd86,
+    8px 0 #35bd86, 0 4px #35bd86, 0 8px #35bd86, -4px 0 #35bd86,
+    -4px 4px #35bd86, -8px 0 #35bd86, -4px -4px #35bd86, 4px 4px #35bd86;
 }
 
 #legendary {
-  background-color: #AB5BB5;
-	box-shadow: 0 -4px #AB5BB5, 0 -8px #AB5BB5, 4px 0 #AB5BB5, 4px -4px #AB5BB5, 8px 0 #AB5BB5, 0 4px #AB5BB5, 0 8px #AB5BB5, -4px 0 #AB5BB5, -4px 4px #AB5BB5, -8px 0 #AB5BB5, -4px -4px #AB5BB5, 4px 4px #AB5BB5;  
+  background-color: #ab5bb5;
+  box-shadow: 0 -4px #ab5bb5, 0 -8px #ab5bb5, 4px 0 #ab5bb5, 4px -4px #ab5bb5,
+    8px 0 #ab5bb5, 0 4px #ab5bb5, 0 8px #ab5bb5, -4px 0 #ab5bb5,
+    -4px 4px #ab5bb5, -8px 0 #ab5bb5, -4px -4px #ab5bb5, 4px 4px #ab5bb5;
+}
+
+.search-scrollbar::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: theme("colors.light.gray");
+}
+
+.search-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.search-scrollbar::-webkit-scrollbar-thumb {
+  background-color: theme("colors.light.primary");
+  border: none;
+}
+
+.search-scrollbar-dark::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #000000;
+}
+
+.search-scrollbar-dark::-webkit-scrollbar {
+  width: 2px;
+  background-color: #f5f5f5;
+}
+
+.search-scrollbar-dark::-webkit-scrollbar-thumb {
+  background-color: #86efac;
+  border: none;
 }

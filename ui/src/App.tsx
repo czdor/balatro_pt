@@ -6,8 +6,8 @@ import { useEffect, useState } from "react";
 import { Tabs } from "./types";
 
 import { Jokers } from "./components/Jokers";
-import { Modifiers } from "./components/Modifiers";
-import { Consumables } from "./components/Consumables";
+import { Modifiers } from "./components/modifiers/Modifiers";
+import { Consumables } from "./components/consumables/Consumables";
 import { Tags } from "./components/Tags";
 
 function App() {

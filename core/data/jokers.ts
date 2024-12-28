@@ -1,5 +1,3 @@
-import { Data } from "../types";
-
 type WeightedItem = {
   value: string;
   weight: number;
@@ -26,20 +24,7 @@ export interface Joker {
   Type: TypeAttrs;
 }
 
-interface Jokers extends Data {
-  data: Joker[];
-}
-
-export const jokers: Jokers = {
-  title: "Jokers",
-  dataScheme: [
-    "Joker",
-    "Effect",
-    "Cost",
-    "Rarity",
-    "Unlock Requirement",
-    "Type",
-  ],
+export const jokers = {
   data: [
     {
       Joker: {
