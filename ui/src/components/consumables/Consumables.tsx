@@ -9,7 +9,7 @@ export const defaultData = {
   data: [],
 };
 
-export const Consumables = () => {
+const Consumables = () => {
   return (
     <ItemsContainer>
       <SpectralCards />
@@ -18,3 +18,5 @@ export const Consumables = () => {
     </ItemsContainer>
   );
 };
+
+export default Consumables;

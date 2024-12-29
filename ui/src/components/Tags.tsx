@@ -2,7 +2,6 @@ import { Fragment, useEffect, useState } from "react";
 import { useFetch } from "../lib/query";
 import { apiRoutes } from "../siteConfig";
 import type { TagsT } from "../types";
-import { Checkbox } from "./Checkbox";
 import { ItemsContainer, ItemsTable, ItemsTableRow, ItemsTitle } from "./Items";
 import { TagImage } from "./TagImage";
 import { InsecureAttrTd } from "./InsecureAttrTd";
@@ -14,16 +13,11 @@ const defaultData = {
   data: [],
 };
 
-export const Tags = () => {
+const Tags = () => {
   const tagsTitle = "Tags";
   const tagsDataScheme = ["Tag", "Benefit", "Notes", "Ante"];
 
-  const {
-    data: tagsResponse,
-    isLoading: tagsLoading,
-    error: tagsError,
-    isSuccess,
-  } = useFetch<any>(apiRoutes.tags);
+  const { data: tagsResponse, isSuccess } = useFetch<any>(apiRoutes.tags);
 
   const { data: tagsData }: TagsT = tagsResponse?.tags || defaultData;
 
@@ -85,3 +79,5 @@ export const Tags = () => {
     </ItemsContainer>
   );
 };
+
+export default Tags;

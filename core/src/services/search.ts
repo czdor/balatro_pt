@@ -1,7 +1,7 @@
 import { indexDataMappings, indexTitleMapping } from "../scripts/dataMappings";
 import { client } from "../lib/elasticSearch";
 
-const searchLimit = 25;
+const searchLimit = 10;
 
 const fields = indexDataMappings.reduce((accum: any, curr: any) => {
   const properties = Object.keys(curr.properties);
@@ -20,7 +20,6 @@ export const search = async (query: string) => {
         multi_match: {
           query,
           fields,
-          fuzziness: "AUTO", // Enables fuzzy search
         },
       },
       size: searchLimit,

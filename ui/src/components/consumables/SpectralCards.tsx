@@ -4,7 +4,6 @@ import { apiRoutes } from "../../siteConfig";
 import { ItemsTable, ItemsTableRow, ItemsTitle } from "../Items";
 import { CardImage } from "../CardImage";
 import { InsecureAttrTd } from "../InsecureAttrTd";
-import { Checkbox } from "../Checkbox";
 import { defaultData } from "./Consumables";
 import { useSorting } from "../../hooks/useSorting";
 
@@ -12,12 +11,9 @@ export const SpectralCards = () => {
   const spectralTitle = "Spectral Cards";
   const spectralDataScheme: string[] = ["Spectral", "Description"];
 
-  const {
-    data: spectralResponse,
-    isLoading: spectralLoading,
-    error: spectralError,
-    isSuccess,
-  } = useFetch<any>(apiRoutes.consumables.spectral);
+  const { data: spectralResponse, isSuccess } = useFetch<any>(
+    apiRoutes.consumables.spectral
+  );
 
   const { data: spectralData } = spectralResponse?.spectralCards || defaultData;
 

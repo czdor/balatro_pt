@@ -2,7 +2,6 @@ import { Fragment, useEffect, useState } from "react";
 import { apiRoutes } from "../../siteConfig";
 import { useFetch } from "../../lib/query";
 import { InsecureAttrTd } from "../InsecureAttrTd";
-import { Checkbox } from "../Checkbox";
 import { ItemsTable, ItemsTableRow, ItemsTitle } from "../Items";
 import { CardImage } from "../CardImage";
 import { defaultData } from "./Consumables";
@@ -17,12 +16,9 @@ export const PlanetCards = () => {
     "Hand Base Score": "HandBaseScore",
   };
 
-  const {
-    data: planetResponse,
-    isLoading: planetLoading,
-    error: planetError,
-    isSuccess,
-  } = useFetch<any>(apiRoutes.consumables.planet);
+  const { data: planetResponse, isSuccess } = useFetch<any>(
+    apiRoutes.consumables.planet
+  );
 
   const { data: planetData } = planetResponse?.planetCards || defaultData;
 

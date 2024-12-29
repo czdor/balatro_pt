@@ -9,7 +9,7 @@ export const defaultData = {
   data: [],
 };
 
-export const Modifiers = () => {
+const Modifiers = () => {
   return (
     <ItemsContainer>
       <Editions />
@@ -18,3 +18,5 @@ export const Modifiers = () => {
     </ItemsContainer>
   );
 };
+
+export default Modifiers;

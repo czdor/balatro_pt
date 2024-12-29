@@ -14,7 +14,7 @@ export const apiRoutes = {
     seals: "/modifiers/seals",
   },
 };
-export const appName = "Balatro Progress Tracker";
+export const appName = "Balatro Wiki";
 export const devName = "czdor";
 export const links = {
   githubProfile: `https://github.com/${devName}`,

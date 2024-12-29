@@ -4,7 +4,6 @@ import { useFetch } from "../../lib/query";
 import { ItemsTable, ItemsTableRow, ItemsTitle } from "../Items";
 import { CardImage } from "../CardImage";
 import { InsecureAttrTd } from "../InsecureAttrTd";
-import { Checkbox } from "../Checkbox";
 import { defaultData } from "./Consumables";
 import { useSorting } from "../../hooks/useSorting";
 
@@ -12,12 +11,9 @@ export const TarotCards = () => {
   const tarotTitle = "Tarot Cards";
   const tarotDataScheme: string[] = ["Tarot", "Description"];
 
-  const {
-    data: tarotResponse,
-    isLoading: tarotLoading,
-    error: tarotError,
-    isSuccess,
-  } = useFetch<any>(apiRoutes.consumables.tarot);
+  const { data: tarotResponse, isSuccess } = useFetch<any>(
+    apiRoutes.consumables.tarot
+  );
   const { data: tarotData } = tarotResponse?.tarotCards || defaultData;
 
   const [data, setData] = useState<any[]>([]);

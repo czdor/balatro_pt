@@ -5,19 +5,15 @@ import { useFetch } from "../../lib/query";
 import { apiRoutes } from "../../siteConfig";
 import { CardImage } from "../CardImage";
 import { InsecureAttrTd } from "../InsecureAttrTd";
-import { Checkbox } from "../Checkbox";
 import { useSorting } from "../../hooks/useSorting";
 
 export const Enhancements = () => {
   const enhancementsTitle = "Enhancements";
   const enhancementsDataScheme = ["Enhancement", "Effect"];
 
-  const {
-    data: enhancementsResponse,
-    isLoading: enhancementsLoading,
-    error: enhancementsError,
-    isSuccess,
-  } = useFetch<any>(apiRoutes.modifiers.enhancements);
+  const { data: enhancementsResponse, isSuccess } = useFetch<any>(
+    apiRoutes.modifiers.enhancements
+  );
   const { data: enhancementsData } =
     enhancementsResponse?.enhancements || defaultData;
 

@@ -26,6 +26,10 @@
   padding: 0;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 .bubble {
   color: white;
   font-weight: 700;

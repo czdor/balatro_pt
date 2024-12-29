@@ -5,19 +5,15 @@ import { defaultData } from "./Modifiers";
 import { ItemsTable, ItemsTableRow, ItemsTitle } from "../Items";
 import { CardImage } from "../CardImage";
 import { InsecureAttrTd } from "../InsecureAttrTd";
-import { Checkbox } from "../Checkbox";
 import { useSorting } from "../../hooks/useSorting";
 
 export const Seals = () => {
   const sealsTitle = "Seals";
   const sealsDataScheme = ["Seal", "Effect"];
 
-  const {
-    data: sealsResponse,
-    isLoading: sealsLoading,
-    error: sealsError,
-    isSuccess,
-  } = useFetch<any>(apiRoutes.modifiers.seals);
+  const { data: sealsResponse, isSuccess } = useFetch<any>(
+    apiRoutes.modifiers.seals
+  );
   const { data: sealsData } = sealsResponse?.seals || defaultData;
 
   const [data, setData] = useState<any[]>([]);

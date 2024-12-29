@@ -12,16 +12,18 @@ const jokerTypes: { [key: string]: string } = {
 
 export const InfoJokerTypes = () => {
   return (
-    <ul className="space-x-8">
-      {Object.keys(jokerTypes).map((jtype: any, idx: number) => (
-        <li
-          key={idx}
-          className="space-x-2 inline-block float-left text-xs text-light-secondary dark:text-dark-gray"
-        >
-          <span dangerouslySetInnerHTML={{ __html: getTypeHtml(jtype) }} />
-          <span>{jokerTypes[jtype]}</span>
-        </li>
-      ))}
-    </ul>
+    <div className="flex justify-center items-center">
+      <ul className="md:space-x-8 text-left">
+        {Object.keys(jokerTypes).map((jtype: any, idx: number) => (
+          <li
+            key={idx}
+            className="space-x-2 text-left block md:inline-block text-xs text-light-secondary dark:text-dark-gray"
+          >
+            <span dangerouslySetInnerHTML={{ __html: getTypeHtml(jtype) }} />
+            <span>{jokerTypes[jtype]}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 };

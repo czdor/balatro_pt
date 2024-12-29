@@ -1,7 +1,6 @@
 import type { Joker, WeightedAttr } from "../types";
 import { capitalize } from "../lib/misc";
 import { JokerType } from "../types";
-import { Checkbox } from "./Checkbox";
 import { Earn, getTypeHtml } from "./Enhancements";
 import { useFetch } from "../lib/query";
 import { Fragment, useEffect, useState } from "react";
@@ -12,7 +11,7 @@ import { CardImage } from "./CardImage";
 import { InsecureAttrTd } from "./InsecureAttrTd";
 import { useSorting } from "../hooks/useSorting";
 
-export const Jokers = () => {
+const Jokers = () => {
   const dataScheme = [
     "Joker",
     "Effect",
@@ -103,3 +102,5 @@ export const Jokers = () => {
     </ItemsContainer>
   );
 };
+
+export default Jokers;

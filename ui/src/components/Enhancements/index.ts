@@ -31,8 +31,6 @@ export const rarity = {
   legendary: "Legendary",
 };
 
-// rarity.uncommon('asd');
-
 export const getTypeHtml = (jokerType: JokerType) => {
   switch (jokerType) {
     case "+c":

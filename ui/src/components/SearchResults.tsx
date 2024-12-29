@@ -1,6 +1,6 @@
-import React from "react";
+import { Fragment, memo } from "react";
 
-export const SearchResults = React.memo(({ results }: { results: any }) => {
+export const SearchResults = memo(({ results }: { results: any }) => {
   return (
     <div className="py-4 w-full rounded-xl bg-light-white dark:bg-dark-secondary mt-3 absolute min-h-20 z-50 px-4 text-left shadow-lg">
       {results && results ? (
@@ -41,7 +41,10 @@ export const SearchResults = React.memo(({ results }: { results: any }) => {
           ))}
         </ul>
       ) : (
-        <p>Seems like there is nothing...</p>
+        <Fragment>
+          <p className="font-semibold mb-4">Recent searches</p>
+          <span>No recent searches</span>
+        </Fragment>
       )}
     </div>
   );

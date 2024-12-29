@@ -52,16 +52,6 @@ export interface TagsT {
   dataScheme: string[];
   data: Tag[];
 }
-
-interface Card {
-  title: string;
-  dataScheme: string[];
-}
-
-interface SpectralCards extends Card {
-  data: SpectralData[];
-}
-
 export interface SpectralData {
   Image: string;
   Name: string;
@@ -69,14 +59,6 @@ export interface SpectralData {
 }
 
 export interface TarotData extends SpectralData {}
-
-interface TarotCards extends Card {
-  data: TarotData[];
-}
-
-interface PlanetCards extends Card {
-  data: PlanetData[];
-}
 
 export interface PlanetData {
   Image: string;
