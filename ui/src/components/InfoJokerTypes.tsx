@@ -1,16 +1,19 @@
+import { useTranslation } from "react-i18next";
 import { getTypeHtml } from "./Enhancements";
 
-const jokerTypes: { [key: string]: string } = {
-  "+c": "Chips Jokers",
-  "+m": "Additive Mult Jokers",
-  Xm: "Multiplicative Mult Jokers",
-  "++": "Chips & Additive Mult Jokers",
-  "!!": "Effect Jokers",
-  "...": "Retrigger Jokers",
-  "+$": "Economy Jokers",
-};
-
 export const InfoJokerTypes = () => {
+  const { t } = useTranslation();
+
+  const jokerTypes: { [key: string]: string } = {
+    "+c": t("+c"),
+    "+m": t("+m"),
+    Xm: t("Xm"),
+    "++": t("++"),
+    "!!": t("!!"),
+    "...": t("..."),
+    "+$": t("+$"),
+  };
+
   return (
     <div className="flex justify-center items-center">
       <ul className="md:space-x-8 text-left">

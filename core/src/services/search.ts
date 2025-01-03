@@ -1,5 +1,5 @@
 import { indexDataMappings, indexTitleMapping } from "../scripts/dataMappings";
-import { client } from "../lib/elasticSearch";
+import { esClient } from "../scripts/indexData";
 
 const searchLimit = 10;
 
@@ -13,7 +13,7 @@ const fields = indexDataMappings.reduce((accum: any, curr: any) => {
 }, []);
 
 export const search = async (query: string) => {
-  const { hits } = await client.search({
+  const { hits } = await esClient.search({
     index: "*",
     body: {
       query: {

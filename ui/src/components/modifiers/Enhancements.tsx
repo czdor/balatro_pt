@@ -6,14 +6,33 @@ import { apiRoutes } from "../../siteConfig";
 import { CardImage } from "../CardImage";
 import { InsecureAttrTd } from "../InsecureAttrTd";
 import { useSorting } from "../../hooks/useSorting";
+import { useTranslation } from "react-i18next";
 
 export const Enhancements = () => {
-  const enhancementsTitle = "Enhancements";
-  const enhancementsDataScheme = ["Enhancement", "Effect"];
+  const { t, i18n } = useTranslation();
 
-  const { data: enhancementsResponse, isSuccess } = useFetch<any>(
-    apiRoutes.modifiers.enhancements
-  );
+  const enhancementsTitle = t("enhancements");
+  const enhancementsDataScheme = [
+    {
+      attr: "Enhancement",
+      text: t("enhancement"),
+    },
+    {
+      attr: "Effect",
+      text: t("effect"),
+    },
+  ];
+
+  const {
+    data: enhancementsResponse,
+    isSuccess,
+    refetch,
+  } = useFetch<any>(apiRoutes.modifiers.enhancements);
+
+  useEffect(() => {
+    refetch();
+  }, [i18n.language]);
+
   const { data: enhancementsData } =
     enhancementsResponse?.enhancements || defaultData;
 
@@ -26,13 +45,13 @@ export const Enhancements = () => {
 
   useEffect(() => {
     if (enhancementsData?.length) {
-      setOriginalData((data) => [...data, ...enhancementsData]);
+      setOriginalData(enhancementsData);
     }
   }, [isSuccess]);
 
   useEffect(() => {
     if (enhancementsData?.length) {
-      setData((data) => [...data, ...enhancementsData]);
+      setData(enhancementsData);
     }
   }, [enhancementsData]);
 
@@ -40,7 +59,10 @@ export const Enhancements = () => {
     sortingStates,
     updateSortingState,
     data: updatedData,
-  } = useSorting(enhancementsDataScheme, originalData);
+  } = useSorting(
+    enhancementsDataScheme.map((i) => i.attr),
+    originalData
+  );
 
   useEffect(() => {
     setData(updatedData);
@@ -55,7 +77,7 @@ export const Enhancements = () => {
       <ItemsTable
         updateSortingState={updateSortingState}
         sortingStates={sortingStates}
-        dataScheme={enhancementsDataScheme}
+        dataScheme={enhancementsDataScheme.map((i) => i.text)}
         body={
           <Fragment>
             {data.map(({ Enhancement, Effect }: any, idx: number) => (

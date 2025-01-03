@@ -1,10 +1,13 @@
-import { client } from "../lib/elasticSearch";
+import { getClient } from "../lib/elasticSearch";
+import { Client as ESClient } from "@elastic/elasticsearch";
 import { indexDataMappings, indexes } from "./dataMappings";
+
+export var esClient: ESClient;
 
 export const deleteAllIndexes = async () => {
   for (const { indexTitle } of indexDataMappings) {
     try {
-      await client.indices.delete({ index: indexTitle });
+      await esClient.indices.delete({ index: indexTitle });
       console.log(`Index ${indexTitle} deleted successfully.`);
     } catch (error) {
       console.error(`Error deleting index: ${indexTitle}`);
@@ -15,7 +18,7 @@ export const deleteAllIndexes = async () => {
 export const createIndexes = async () => {
   // Create a new index with custom analyzer
   for (const { indexTitle, properties } of indexDataMappings) {
-    await client.indices.create({
+    await esClient.indices.create({
       index: indexTitle,
       body: {
         settings: {
@@ -56,7 +59,7 @@ export const indexData = async () => {
   // index data
   for (const { indexTitle, data } of indexDataMappings) {
     for (const body of data) {
-      await client.index({
+      await esClient.index({
         index: indexTitle,
         body,
       });
@@ -65,8 +68,17 @@ export const indexData = async () => {
 
   // Refresh indexes
   for (const index of indexes) {
-    await client.indices.refresh({ index });
+    await esClient.indices.refresh({ index });
   }
 
   console.log("Data indexed successfully");
+};
+
+export const initES = async () => {
+  esClient = await getClient();
+  console.log("ok got esCLient");
+
+  await deleteAllIndexes();
+  await createIndexes();
+  await indexData();
 };

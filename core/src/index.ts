@@ -1,15 +1,11 @@
 import express, { Express } from "express";
 import routes from "./routes";
 import cors from "cors";
-import {
-  createIndexes,
-  deleteAllIndexes,
-  indexData,
-} from "./scripts/indexData";
+import { initES } from "./scripts/indexData";
 import { DefaultPort, ClientUrl } from "../config";
 
 const app: Express = express();
-const port = DefaultPort || 3000;
+const port = DefaultPort || 8000;
 
 const corsOptions = {
   origin: ClientUrl,
@@ -19,9 +15,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 (async function () {
-  await deleteAllIndexes();
-  await createIndexes();
-  await indexData();
+  await initES();
 })();
 
 app.use("/api/v1", routes);

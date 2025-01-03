@@ -1,6 +1,7 @@
 import { Fragment, useEffect, useState } from "react";
 import { SortingState } from "../hooks/useSorting";
 import { ScrollUp } from "./ScrollUp";
+import { useTranslation } from "react-i18next";
 
 export const ItemsContainer = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -17,10 +18,12 @@ export const ItemsTitle = ({
   title: string;
   totalItems: number;
 }) => {
+  const { t } = useTranslation();
+
   return (
     <div className="text-center md:text-left">
       <h1 className="text-lg font-bold text-light-secondary dark:text-dark-primary">
-        List of {title} ({totalItems})
+        {t("listOf")} {title} ({totalItems})
       </h1>
     </div>
   );

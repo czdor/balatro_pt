@@ -1,5 +1,5 @@
 import axios from "axios";
-import { coreApiUrl as baseURL } from "../siteConfig";
+import { coreApiUrl as baseURL, defaultSelectedLang } from "../siteConfig";
 
 const cfg = { baseURL };
 const ctx = axios.create(cfg);
@@ -7,7 +7,10 @@ const ctx = axios.create(cfg);
 export const api = {
   get: <T>(uri: string, params?: object) =>
     ctx.get<T>(uri, {
-      headers: {},
+      headers: {
+        "Accept-Language":
+          localStorage.getItem("lang") ?? defaultSelectedLang.abbr,
+      },
       ...params,
     }),
   post: <T>(uri: string, data: any, params?: object) =>

@@ -6,6 +6,7 @@ import { ItemsContainer, ItemsTable, ItemsTableRow, ItemsTitle } from "./Items";
 import { TagImage } from "./TagImage";
 import { InsecureAttrTd } from "./InsecureAttrTd";
 import { useSorting } from "../hooks/useSorting";
+import { useTranslation } from "react-i18next";
 
 const defaultData = {
   title: "",
@@ -14,10 +15,37 @@ const defaultData = {
 };
 
 const Tags = () => {
-  const tagsTitle = "Tags";
-  const tagsDataScheme = ["Tag", "Benefit", "Notes", "Ante"];
+  const { t, i18n } = useTranslation();
 
-  const { data: tagsResponse, isSuccess } = useFetch<any>(apiRoutes.tags);
+  const tagsTitle = t("tags");
+  const tagsDataScheme = [
+    {
+      attr: "Tag",
+      text: t("tag"),
+    },
+    {
+      attr: "Benefit",
+      text: t("benefit"),
+    },
+    {
+      attr: "Notes",
+      text: t("notes"),
+    },
+    {
+      attr: "Ante",
+      text: t("ante"),
+    },
+  ];
+
+  const {
+    data: tagsResponse,
+    isSuccess,
+    refetch,
+  } = useFetch<any>(apiRoutes.tags);
+
+  useEffect(() => {
+    refetch();
+  }, [i18n.language]);
 
   const { data: tagsData }: TagsT = tagsResponse?.tags || defaultData;
 
@@ -29,22 +57,20 @@ const Tags = () => {
   }, [originalData]);
 
   useEffect(() => {
-    if (tagsData?.length) {
-      setOriginalData((data) => [...data, ...tagsData]);
+    if (isSuccess && tagsData.length) {
+      setOriginalData(tagsData);
+      setData(tagsData);
     }
-  }, [isSuccess]);
-
-  useEffect(() => {
-    if (tagsData?.length) {
-      setData((data) => [...data, ...tagsData]);
-    }
-  }, [tagsData]);
+  }, [isSuccess, tagsData]);
 
   const {
     sortingStates,
     updateSortingState,
     data: updatedData,
-  } = useSorting(Object.values(tagsDataScheme), originalData);
+  } = useSorting(
+    tagsDataScheme.map((i) => i.attr),
+    originalData
+  );
 
   useEffect(() => {
     setData(updatedData);
@@ -56,10 +82,10 @@ const Tags = () => {
       <ItemsTable
         updateSortingState={updateSortingState}
         sortingStates={sortingStates}
-        dataScheme={tagsDataScheme}
+        dataScheme={tagsDataScheme.map((i) => i.text)}
         body={
           <Fragment>
-            {data.map(({ Tag, Benefit, Notes, Ante }: any, idx: number) => (
+            {data.map(({ Tag, Benefit, Notes, Ante }, idx: number) => (
               <ItemsTableRow idx={idx}>
                 <td className="py-4 w-full md:w-[14%] block md:table-cell">
                   <TagImage src={Tag.image} alt={Tag.value} />

@@ -7,7 +7,7 @@ const transitionAnimations = {
   exit: { opacity: 0 },
 };
 
-const transitionDuration = 1;
+const transitionDuration = 2;
 
 export const PageTransition = ({ children }: { children: React.ReactNode }) => {
   return (

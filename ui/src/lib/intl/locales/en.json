@@ -1,0 +1,62 @@
+{
+    "jokers": "Jokers",
+    "modifiers": "Modifiers",
+    "consumables": "Consumables",
+    "tags": "Tags",
+    "searchMessage": "Search...",
+    "recentSearchesMessage": "Recent searches",
+    "noRecentSearchesMessage": "No recent searches",
+
+    "joker": "Joker",
+    "effect": "Effect",
+    "cost": "Cost",
+    "rarity": "Rarity",
+    "requirement": "Requirement",
+    "type": "Type",
+
+    "listOf": "List of",
+
+    "builtBy": "Built by",
+
+    "+c": "Chips Jokers",
+    "+m": "Additive Mult Jokers",
+    "Xm": "Multiplicative Mult Jokers",
+    "++": "Chips & Additive Mult Jokers",
+    "!!": "Effect Jokers",
+    "...": "Retrigger Jokers",
+    "+$": "Economy Jokers",
+
+    "seals": "Seals",
+    "seal": "Seal",
+
+    "enhancements": "Enhancements",
+    "enhancement": "Enhancement",
+
+    "editions": "Editions",
+    "edition": "Edition",
+
+    "description": "Description",
+
+    "tarotCards": "Tarot Cards",
+    "tarot": "Tarot",
+
+    "spectralCards": "Spectral Cards",
+    "spectral": "Spectral",
+
+    "planetCards": "Planet Cards",
+    "planet": "Planet",
+
+    "PokerHand": "Poker Hand",
+    "HandBaseScore": "Hand Base Score",
+
+    "addition": "Addition",
+
+    "ante": "Ante",
+    "notes": "Notes",
+    "benefit": "Benefit",
+    "tag": "Tag",
+
+    "vouchers": "Vouchers",
+    "voucher": "Voucher",
+    "unlocksWhen": "Unlocks When"
+}

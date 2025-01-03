@@ -1,4 +1,5 @@
-import type { Request, Response } from "../../types";
+import { defaultLanguage } from "../../config";
+import type { AvailableLanguages, Request, Response } from "../../types";
 import {
   getEditions,
   getEnhancements,
@@ -8,23 +9,15 @@ import {
   getSpectralCards,
   getTarotCards,
   getTags,
+  getVouchers,
 } from "../services/cards";
 
 export const getAllJokers = (req: Request, res: Response): void => {
   try {
-    // const { currentPage = 0, itemsPerPage = 10 } = req.query;
-    let { title, dataScheme, data: jokers }: any = getJokers();
-    // const totalJokers = jokers || [];
-
-    // const totalPages = Math.ceil(totalJokers.length / Number(itemsPerPage));
-
-    // const startIndex = Number(currentPage) * Number(itemsPerPage);
-    // const endIndex = startIndex + Number(itemsPerPage);
-
-    // const _jokers = totalJokers.slice(startIndex, endIndex);
+    const lang = req.headers["accept-language"] || defaultLanguage;
+    let { data: jokers }: any = getJokers(lang as AvailableLanguages);
 
     res.status(200).send({
-      // totalPages,
       jokers,
     });
   } catch (err) {
@@ -37,7 +30,8 @@ export const getAllJokers = (req: Request, res: Response): void => {
 
 export const getAllTags = (req: Request, res: Response): void => {
   try {
-    const tags: any = getTags();
+    const lang = req.headers["accept-language"] || defaultLanguage;
+    const tags: any = getTags(lang as AvailableLanguages);
 
     res.status(200).send({
       tags,
@@ -51,7 +45,8 @@ export const getAllTags = (req: Request, res: Response): void => {
 
 export const getAllEditions = (req: Request, res: Response): void => {
   try {
-    const editions: any = getEditions();
+    const lang = req.headers["accept-language"] || defaultLanguage;
+    const editions: any = getEditions(lang as AvailableLanguages);
 
     res.status(200).send({
       editions,
@@ -65,7 +60,8 @@ export const getAllEditions = (req: Request, res: Response): void => {
 
 export const getAllEnhancements = (req: Request, res: Response): void => {
   try {
-    const enhancements: any = getEnhancements();
+    const lang = req.headers["accept-language"] || defaultLanguage;
+    const enhancements: any = getEnhancements(lang as AvailableLanguages);
 
     res.status(200).send({
       enhancements,
@@ -79,7 +75,8 @@ export const getAllEnhancements = (req: Request, res: Response): void => {
 
 export const getAllSeals = (req: Request, res: Response): void => {
   try {
-    const seals: any = getSeals();
+    const lang = req.headers["accept-language"] || defaultLanguage;
+    const seals: any = getSeals(lang as AvailableLanguages);
 
     res.status(200).send({
       seals,
@@ -93,7 +90,8 @@ export const getAllSeals = (req: Request, res: Response): void => {
 
 export const getAllPlanetCards = (req: Request, res: Response): void => {
   try {
-    const planetCards: any = getPlanetCards();
+    const lang = req.headers["accept-language"] || defaultLanguage;
+    const planetCards: any = getPlanetCards(lang as AvailableLanguages);
 
     res.status(200).send({
       planetCards,
@@ -107,7 +105,8 @@ export const getAllPlanetCards = (req: Request, res: Response): void => {
 
 export const getAllTarotCards = (req: Request, res: Response): void => {
   try {
-    const tarotCards: any = getTarotCards();
+    const lang = req.headers["accept-language"] || defaultLanguage;
+    const tarotCards: any = getTarotCards(lang as AvailableLanguages);
 
     res.status(200).send({
       tarotCards,
@@ -121,10 +120,26 @@ export const getAllTarotCards = (req: Request, res: Response): void => {
 
 export const getAllSpectralCards = (req: Request, res: Response): void => {
   try {
-    const spectralCards: any = getSpectralCards();
+    const lang = req.headers["accept-language"] || defaultLanguage;
+    const spectralCards: any = getSpectralCards(lang as AvailableLanguages);
 
     res.status(200).send({
       spectralCards,
+    });
+  } catch (err) {
+    res.status(500).send({
+      error: "something went wrong",
+    });
+  }
+};
+
+export const getAllVouchers = (req: Request, res: Response): void => {
+  try {
+    const lang = req.headers["accept-language"] || defaultLanguage;
+    const vouchers: any = getVouchers(lang as AvailableLanguages);
+
+    res.status(200).send({
+      vouchers,
     });
   } catch (err) {
     res.status(500).send({

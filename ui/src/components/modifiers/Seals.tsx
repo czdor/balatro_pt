@@ -6,15 +6,33 @@ import { ItemsTable, ItemsTableRow, ItemsTitle } from "../Items";
 import { CardImage } from "../CardImage";
 import { InsecureAttrTd } from "../InsecureAttrTd";
 import { useSorting } from "../../hooks/useSorting";
+import { useTranslation } from "react-i18next";
 
 export const Seals = () => {
-  const sealsTitle = "Seals";
-  const sealsDataScheme = ["Seal", "Effect"];
+  const { t, i18n } = useTranslation();
 
-  const { data: sealsResponse, isSuccess } = useFetch<any>(
-    apiRoutes.modifiers.seals
-  );
+  const sealsTitle = t("seals");
+  const sealsDataScheme = [
+    {
+      attr: "Seal",
+      text: t("seal"),
+    },
+    {
+      attr: "Effect",
+      text: t("effect"),
+    },
+  ];
+
+  const {
+    data: sealsResponse,
+    isSuccess,
+    refetch,
+  } = useFetch<any>(apiRoutes.modifiers.seals);
   const { data: sealsData } = sealsResponse?.seals || defaultData;
+
+  useEffect(() => {
+    refetch();
+  }, [i18n.language]);
 
   const [data, setData] = useState<any[]>([]);
   const [originalData, setOriginalData] = useState<any[]>([]);
@@ -25,13 +43,13 @@ export const Seals = () => {
 
   useEffect(() => {
     if (sealsData?.length) {
-      setOriginalData((data) => [...data, ...sealsData]);
+      setOriginalData(sealsData);
     }
   }, [isSuccess]);
 
   useEffect(() => {
     if (sealsData?.length) {
-      setData((data) => [...data, ...sealsData]);
+      setData(sealsData);
     }
   }, [sealsData]);
 
@@ -39,7 +57,10 @@ export const Seals = () => {
     sortingStates,
     updateSortingState,
     data: updatedData,
-  } = useSorting(sealsDataScheme, originalData);
+  } = useSorting(
+    sealsDataScheme.map((i) => i.attr),
+    originalData
+  );
 
   useEffect(() => {
     setData(updatedData);
@@ -51,7 +72,7 @@ export const Seals = () => {
       <ItemsTable
         updateSortingState={updateSortingState}
         sortingStates={sortingStates}
-        dataScheme={sealsDataScheme}
+        dataScheme={sealsDataScheme.map((i) => i.text)}
         body={
           <Fragment>
             {data.map(({ Seal, Effect }: any, idx: number) => (

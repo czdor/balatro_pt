@@ -6,14 +6,33 @@ import { CardImage } from "../CardImage";
 import { InsecureAttrTd } from "../InsecureAttrTd";
 import { defaultData } from "./Consumables";
 import { useSorting } from "../../hooks/useSorting";
+import { useTranslation } from "react-i18next";
 
 export const TarotCards = () => {
-  const tarotTitle = "Tarot Cards";
-  const tarotDataScheme: string[] = ["Tarot", "Description"];
+  const { t, i18n } = useTranslation();
 
-  const { data: tarotResponse, isSuccess } = useFetch<any>(
-    apiRoutes.consumables.tarot
-  );
+  const tarotTitle = t("tarotCards");
+  const tarotDataScheme = [
+    {
+      attr: "Tarot",
+      text: t("tarot"),
+    },
+    {
+      attr: "Description",
+      text: t("description"),
+    },
+  ];
+
+  const {
+    data: tarotResponse,
+    isSuccess,
+    refetch,
+  } = useFetch<any>(apiRoutes.consumables.tarot);
+
+  useEffect(() => {
+    refetch();
+  }, [i18n.language]);
+
   const { data: tarotData } = tarotResponse?.tarotCards || defaultData;
 
   const [data, setData] = useState<any[]>([]);
@@ -25,13 +44,13 @@ export const TarotCards = () => {
 
   useEffect(() => {
     if (tarotData?.length) {
-      setOriginalData((data) => [...data, ...tarotData]);
+      setOriginalData(tarotData);
     }
   }, [isSuccess]);
 
   useEffect(() => {
     if (tarotData?.length) {
-      setData((data) => [...data, ...tarotData]);
+      setData(tarotData);
     }
   }, [tarotData]);
 
@@ -39,7 +58,10 @@ export const TarotCards = () => {
     sortingStates,
     updateSortingState,
     data: updatedData,
-  } = useSorting(tarotDataScheme, originalData);
+  } = useSorting(
+    tarotDataScheme.map((i) => i.attr),
+    originalData
+  );
 
   useEffect(() => {
     setData(updatedData);
@@ -51,7 +73,7 @@ export const TarotCards = () => {
       <ItemsTable
         updateSortingState={updateSortingState}
         sortingStates={sortingStates}
-        dataScheme={tarotDataScheme}
+        dataScheme={tarotDataScheme.map((i) => i.text)}
         body={
           <Fragment>
             {data.map(({ Tarot, Description }: any, idx: number) => (

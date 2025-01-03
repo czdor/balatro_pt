@@ -5,9 +5,12 @@ import { apiRoutes } from "../siteConfig";
 import { useDebounce } from "../hooks/useDebounce";
 import { api } from "../lib/api";
 import useClickOutside from "../hooks/useClickOutside";
+import { useTranslation } from "react-i18next";
 
 export const SearchBar = () => {
-  const searchBarPlaceHolder = "Search...";
+  const { t } = useTranslation();
+
+  const searchBarPlaceHolder = t("searchMessage");
   const [isInputFocused, setIsInputFocused] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const [searchQuery, setSearchQuery] = useState<string>("");

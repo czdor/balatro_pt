@@ -10,22 +10,51 @@ import { InfoJokerTypes } from "./InfoJokerTypes";
 import { CardImage } from "./CardImage";
 import { InsecureAttrTd } from "./InsecureAttrTd";
 import { useSorting } from "../hooks/useSorting";
+import { useTranslation } from "react-i18next";
 
 const Jokers = () => {
+  const { t, i18n } = useTranslation();
+
   const dataScheme = [
-    "Joker",
-    "Effect",
-    "Cost",
-    "Rarity",
-    "Requirement",
-    "Type",
+    {
+      attr: "Joker",
+      text: t("joker"),
+    },
+    {
+      attr: "Effect",
+      text: t("effect"),
+    },
+    {
+      attr: "Cost",
+      text: t("cost"),
+    },
+    {
+      attr: "Rarity",
+      text: t("rarity"),
+    },
+    {
+      attr: "Requirement",
+      text: t("requirement"),
+    },
+    {
+      attr: "Type",
+      text: t("type"),
+    },
   ];
 
-  const { data: jokersData, isSuccess } = useFetch<any>(apiRoutes.jokers);
+  const {
+    data: jokersData,
+    isSuccess,
+    refetch,
+  } = useFetch<any>(apiRoutes.jokers);
+
+  useEffect(() => {
+    refetch();
+  }, [i18n.language]);
 
   const [originalData, setOriginalData] = useState<Joker[]>([]);
   const [data, setData] = useState<Joker[]>([]);
-  const title = "Jokers";
+  const title = t("jokers");
 
   useEffect(() => {
     if (originalData?.length) setData(originalData);
@@ -33,13 +62,13 @@ const Jokers = () => {
 
   useEffect(() => {
     if (jokersData?.jokers) {
-      setOriginalData((data) => [...data, ...jokersData.jokers]);
+      setOriginalData(jokersData.jokers);
     }
   }, [isSuccess]);
 
   useEffect(() => {
     if (jokersData?.jokers) {
-      setData((data) => [...data, ...jokersData.jokers]);
+      setData(jokersData.jokers);
     }
   }, [jokersData]);
 
@@ -47,16 +76,21 @@ const Jokers = () => {
     sortingStates,
     updateSortingState,
     data: updatedData,
-  } = useSorting(dataScheme, originalData);
+  } = useSorting(
+    dataScheme.map((i) => i.attr),
+    originalData
+  );
 
   useEffect(() => {
     setData(updatedData);
   }, [updatedData]);
 
   const RarityComponent = ({ rarity }: { rarity: WeightedAttr }) => {
+    const rarityTypeMap = ["common", "uncommon", "rare", "legendary"];
+
     return (
       <td className="block md:table-cell px-6">
-        <span id={rarity.value} className="bubble">
+        <span id={rarityTypeMap[rarity.weight - 1]} className="bubble">
           {capitalize(rarity.value)}
         </span>
       </td>
@@ -70,7 +104,7 @@ const Jokers = () => {
       <ItemsTable
         updateSortingState={updateSortingState}
         sortingStates={sortingStates}
-        dataScheme={dataScheme}
+        dataScheme={dataScheme.map((i) => i.text)}
         body={
           <Fragment>
             {data.map(

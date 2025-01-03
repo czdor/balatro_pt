@@ -6,19 +6,41 @@ import { ItemsTable, ItemsTableRow, ItemsTitle } from "../Items";
 import { CardImage } from "../CardImage";
 import { defaultData } from "./Consumables";
 import { useSorting } from "../../hooks/useSorting";
+import { useTranslation } from "react-i18next";
 
 export const PlanetCards = () => {
-  const planetTitle = "Planet Cards";
-  const planetDataScheme = {
-    Planet: "Planet",
-    Addition: "Addition",
-    "Poker Hand": "PokerHand",
-    "Hand Base Score": "HandBaseScore",
-  };
+  const { t, i18n } = useTranslation();
 
-  const { data: planetResponse, isSuccess } = useFetch<any>(
-    apiRoutes.consumables.planet
-  );
+  const planetTitle = t("planetCards");
+
+  const planetDataScheme = [
+    {
+      attr: "Planet",
+      text: t("planet"),
+    },
+    {
+      attr: "Addition",
+      text: t("addition"),
+    },
+    {
+      attr: "PokerHand",
+      text: t("PokerHand"),
+    },
+    {
+      attr: "HandBaseScore",
+      text: t("HandBaseScore"),
+    },
+  ];
+
+  const {
+    data: planetResponse,
+    isSuccess,
+    refetch,
+  } = useFetch<any>(apiRoutes.consumables.planet);
+
+  useEffect(() => {
+    refetch();
+  }, [i18n.language]);
 
   const { data: planetData } = planetResponse?.planetCards || defaultData;
 
@@ -31,13 +53,13 @@ export const PlanetCards = () => {
 
   useEffect(() => {
     if (planetData?.length) {
-      setOriginalData((data) => [...data, ...planetData]);
+      setOriginalData(planetData);
     }
   }, [isSuccess]);
 
   useEffect(() => {
     if (planetData?.length) {
-      setData((data) => [...data, ...planetData]);
+      setData(planetData);
     }
   }, [planetData]);
 
@@ -45,7 +67,10 @@ export const PlanetCards = () => {
     sortingStates,
     updateSortingState,
     data: updatedData,
-  } = useSorting(Object.values(planetDataScheme), originalData);
+  } = useSorting(
+    planetDataScheme.map((i) => i.attr),
+    originalData
+  );
 
   useEffect(() => {
     setData(updatedData);
@@ -57,7 +82,7 @@ export const PlanetCards = () => {
       <ItemsTable
         updateSortingState={updateSortingState}
         sortingStates={sortingStates}
-        dataScheme={Object.keys(planetDataScheme)}
+        dataScheme={planetDataScheme.map((i) => i.text)}
         body={
           <Fragment>
             {data.map(

@@ -1,7 +1,6 @@
 import { AvailableThemes } from "../types";
 import { useTheme } from "../hooks/useTheme";
 import { useState } from "react";
-import { capitalize } from "../lib/misc";
 import { Check, Moon, Sun } from "./icons";
 import useClickOutside from "../hooks/useClickOutside";
 
@@ -30,7 +29,6 @@ export function ThemeToggle() {
         ) : (
           <Moon className="w-4 h-4" />
         )}
-        <span className="ml-2 hidden md:inline-block">{capitalize(theme)}</span>
         {checked ? (
           <span className="ms-3">
             <Check className="w-2 h-2" />
@@ -48,7 +46,7 @@ export function ThemeToggle() {
         id="dropdownDefaultButton"
         data-dropdown-toggle="dropdown"
         onClick={() => setDisplayThemesDropdown(!displayThemesDropdown)}
-        className="text-light-primary hover:bg-light-gray focus:outline-none font-medium rounded-lg text-sm px-3 md:px-5 py-2.5 text-center inline-flex items-center dark:bg-none dark:hover:bg-dark-secondary select-none justify-center"
+        className="text-light-primary hover:bg-light-gray focus:outline-none font-medium rounded-lg text-sm px-3 md:px-2 py-1.5 text-center inline-flex items-center dark:bg-none dark:hover:bg-dark-secondary select-none justify-center"
         type="button"
       >
         <DisplayTheme theme={currentTheme} checked={false} />
@@ -83,7 +81,7 @@ export function ThemeToggle() {
             <li key={idx}>
               <button
                 onClick={() => hdlSetTheme(theme)}
-                className="rounded-lg flex items-center justify-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white w-full outline-none"
+                className="rounded-lg flex items-center justify-left py-1 pl-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white w-full outline-none"
               >
                 <DisplayTheme theme={theme} checked={currentTheme === theme} />
               </button>

@@ -6,14 +6,32 @@ import { CardImage } from "../CardImage";
 import { InsecureAttrTd } from "../InsecureAttrTd";
 import { defaultData } from "./Consumables";
 import { useSorting } from "../../hooks/useSorting";
+import { useTranslation } from "react-i18next";
 
 export const SpectralCards = () => {
-  const spectralTitle = "Spectral Cards";
-  const spectralDataScheme: string[] = ["Spectral", "Description"];
+  const { t, i18n } = useTranslation();
 
-  const { data: spectralResponse, isSuccess } = useFetch<any>(
-    apiRoutes.consumables.spectral
-  );
+  const spectralTitle = t("spectralCards");
+  const spectralDataScheme = [
+    {
+      attr: "Spectral",
+      text: t("spectral"),
+    },
+    {
+      attr: "Description",
+      text: t("description"),
+    },
+  ];
+
+  const {
+    data: spectralResponse,
+    isSuccess,
+    refetch,
+  } = useFetch<any>(apiRoutes.consumables.spectral);
+
+  useEffect(() => {
+    refetch();
+  }, [i18n.language]);
 
   const { data: spectralData } = spectralResponse?.spectralCards || defaultData;
 
@@ -26,13 +44,13 @@ export const SpectralCards = () => {
 
   useEffect(() => {
     if (spectralData?.length) {
-      setOriginalData((data) => [...data, ...spectralData]);
+      setOriginalData(spectralData);
     }
   }, [isSuccess]);
 
   useEffect(() => {
     if (spectralData?.length) {
-      setData((data) => [...data, ...spectralData]);
+      setData(spectralData);
     }
   }, [spectralData]);
 
@@ -40,7 +58,10 @@ export const SpectralCards = () => {
     sortingStates,
     updateSortingState,
     data: updatedData,
-  } = useSorting(spectralDataScheme, originalData);
+  } = useSorting(
+    spectralDataScheme.map((i) => i.attr),
+    originalData
+  );
 
   useEffect(() => {
     setData(updatedData);
@@ -52,7 +73,7 @@ export const SpectralCards = () => {
       <ItemsTable
         updateSortingState={updateSortingState}
         sortingStates={sortingStates}
-        dataScheme={spectralDataScheme}
+        dataScheme={spectralDataScheme.map((i) => i.text)}
         body={
           <Fragment>
             {data.map(({ Spectral, Description }: any, idx: number) => (

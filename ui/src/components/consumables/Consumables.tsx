@@ -2,6 +2,7 @@ import { ItemsContainer } from "../Items";
 import { SpectralCards } from "./SpectralCards";
 import { TarotCards } from "./TarotCards";
 import { PlanetCards } from "./PlanetCards";
+import { Vouchers } from "./Vouchers";
 
 export const defaultData = {
   title: "",
@@ -12,9 +13,10 @@ export const defaultData = {
 const Consumables = () => {
   return (
     <ItemsContainer>
-      <SpectralCards />
-      <TarotCards />
+      <Vouchers />
       <PlanetCards />
+      <TarotCards />
+      <SpectralCards />
     </ItemsContainer>
   );
 };

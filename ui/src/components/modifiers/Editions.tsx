@@ -6,14 +6,33 @@ import { ItemsTable, ItemsTableRow, ItemsTitle } from "../Items";
 import { CardImage } from "../CardImage";
 import { InsecureAttrTd } from "../InsecureAttrTd";
 import { useSorting } from "../../hooks/useSorting";
+import { useTranslation } from "react-i18next";
 
 export const Editions = () => {
-  const editionsTitle = "Editions";
-  const editionsDataScheme = ["Edition", "Effect"];
+  const { t, i18n } = useTranslation();
 
-  const { data: editionsResponse, isSuccess } = useFetch<any>(
-    apiRoutes.modifiers.editions
-  );
+  const editionsTitle = t("editions");
+  const editionsDataScheme = [
+    {
+      attr: "Edition",
+      text: t("edition"),
+    },
+    {
+      attr: "Effect",
+      text: t("effect"),
+    },
+  ];
+
+  const {
+    data: editionsResponse,
+    isSuccess,
+    refetch,
+  } = useFetch<any>(apiRoutes.modifiers.editions);
+
+  useEffect(() => {
+    refetch();
+  }, [i18n.language]);
+
   const { data: editionsData } = editionsResponse?.editions || defaultData;
 
   const [data, setData] = useState<any[]>([]);
@@ -25,13 +44,13 @@ export const Editions = () => {
 
   useEffect(() => {
     if (editionsData?.length) {
-      setOriginalData((data) => [...data, ...editionsData]);
+      setOriginalData(editionsData);
     }
   }, [isSuccess]);
 
   useEffect(() => {
     if (editionsData?.length) {
-      setData((data) => [...data, ...editionsData]);
+      setData(editionsData);
     }
   }, [editionsData]);
 
@@ -39,7 +58,10 @@ export const Editions = () => {
     sortingStates,
     updateSortingState,
     data: updatedData,
-  } = useSorting(editionsDataScheme, originalData);
+  } = useSorting(
+    editionsDataScheme.map((i) => i.attr),
+    originalData
+  );
 
   useEffect(() => {
     setData(updatedData);
@@ -51,7 +73,7 @@ export const Editions = () => {
       <ItemsTable
         updateSortingState={updateSortingState}
         sortingStates={sortingStates}
-        dataScheme={editionsDataScheme}
+        dataScheme={editionsDataScheme.map((i) => i.text)}
         body={
           <Fragment>
             {data.map(({ Edition, Effect }: any, idx: number) => (

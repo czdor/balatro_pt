@@ -47,9 +47,8 @@ export const useSorting = (dataScheme: string[], initialData: any[]) => {
   const [data, setData] = useState(initialData);
 
   const updateSortingState = (idx: number) => {
-    const sortingStatesCopy = defaultSortingStates;
-    sortingStatesCopy[idx] = (sortingStates[idx] + 1) % 3;
-
+    const sortingStatesCopy = [...sortingStates]; // Make a copy of sorting states
+    sortingStatesCopy[idx] = (sortingStates[idx] + 1) % 3; // Cycle through states
     setSortingStates(sortingStatesCopy);
   };
 
@@ -58,26 +57,33 @@ export const useSorting = (dataScheme: string[], initialData: any[]) => {
       (i) => i !== SortingStateTypeMap.Neutral
     );
 
+    // Check if no sorting state is set
     if (sortingStateIdx === -1) {
       setData(initialData);
       return;
     }
 
     const sortingState = sortingStates[sortingStateIdx];
+    let sortedData = [...initialData]; // Create a copy of initialData
 
     switch (sortingState) {
       case SortingStateTypeMap.Asc:
-        setData(sortAsc(dataScheme[sortingStateIdx], initialData));
-        return;
+        sortedData = sortAsc(dataScheme[sortingStateIdx], sortedData);
+        break;
 
       case SortingStateTypeMap.Desc:
-        setData(sortDesc(dataScheme[sortingStateIdx], initialData));
-        return;
+        sortedData = sortDesc(dataScheme[sortingStateIdx], sortedData);
+        break;
 
       default:
-        setData(initialData);
+        break;
     }
-  }, [sortingStates, initialData, dataScheme]);
+
+    // Only update if sorted data is different
+    if (JSON.stringify(sortedData) !== JSON.stringify(data)) {
+      setData(sortedData);
+    }
+  }, [sortingStates, initialData, dataScheme]); // Ensure appropriate dependencies
 
   return { sortingStates, updateSortingState, data };
 };

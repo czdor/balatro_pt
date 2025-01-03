@@ -1,4 +1,4 @@
-# frontend/Dockerfile
+
 FROM node:18 AS build
 
 RUN npm install -g pnpm

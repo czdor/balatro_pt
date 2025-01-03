@@ -1,7 +1,12 @@
-import { jokers } from "../../data/jokers";
-import { planetCards, spectralCards, tarotCards } from "../../data/consumables";
-import { editions, enhancements, seals } from "../../data/modifiers";
-import { tags } from "../../data/tags";
+import { jokers } from "../../data/en/jokers";
+import {
+  planetCards,
+  spectralCards,
+  tarotCards,
+  vouchers,
+} from "../../data/en/consumables";
+import { editions, enhancements, seals } from "../../data/en/modifiers";
+import { tags } from "../../data/en/tags";
 
 const textNgramAnalyzer = { type: "text", analyzer: "ngram_analyzer" };
 
@@ -20,6 +25,7 @@ export const indexTitleMapping = {
   enhacements: "Enhancements",
   seals: "Seals",
   tags: "Tags",
+  vouchers: "Vouchers",
 };
 
 export const indexDataMappings: IndexDataMap[] = [
@@ -190,6 +196,32 @@ export const indexDataMappings: IndexDataMap[] = [
       },
     },
     data: tags.data,
+  },
+  {
+    indexTitle: "vouchers",
+    properties: {
+      Voucher: {
+        properties: {
+          value: textNgramAnalyzer,
+        },
+      },
+      Effect: {
+        properties: {
+          value: textNgramAnalyzer,
+        },
+      },
+      UnlocksWhen: {
+        properties: {
+          value: textNgramAnalyzer,
+        },
+      },
+      Notes: {
+        properties: {
+          value: textNgramAnalyzer,
+        },
+      },
+    },
+    data: vouchers.data,
   },
 ];
 

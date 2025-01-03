@@ -10,6 +10,7 @@ import {
   getAllSpectralCards,
   getAllTags,
   getAllTarotCards,
+  getAllVouchers,
 } from "../controllers/cards.controller";
 
 import { getSearchResult } from "../controllers/search.controller";
@@ -29,6 +30,7 @@ router.get("/modifiers/seals", getAllSeals);
 router.get("/consumables/planet", getAllPlanetCards);
 router.get("/consumables/tarot", getAllTarotCards);
 router.get("/consumables/spectral", getAllSpectralCards);
+router.get("/consumables/vouchers", getAllVouchers);
 
 // Search
 router.get("/search", getSearchResult);

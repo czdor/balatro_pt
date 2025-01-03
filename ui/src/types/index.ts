@@ -1,9 +1,15 @@
 export type TODO = any;
 export type AvailableThemes = "dark" | "light";
+export type AvailableLanguages = "es" | "en";
 
 export type Tabs = 0 | 1 | 2;
 
 export type JokerType = "+c" | "+m" | "Xm" | "++" | "!!" | "..." | "+$";
+
+export type Language = {
+  abbr: AvailableLanguages;
+  lang: string;
+};
 
 export interface WeightedAttr {
   weight: number;

@@ -4,3 +4,5 @@ export interface Data {
   title: string;
   dataScheme: string[];
 }
+
+export type AvailableLanguages = "en" | "es";

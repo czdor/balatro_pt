@@ -13,6 +13,7 @@ import {
 
 import { PageTransition } from "./components/PageTransition";
 import { AnimatePresence } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 const Jokers = lazy(() => import("./components/Jokers"));
 const Modifiers = lazy(() => import("./components/modifiers/Modifiers"));
@@ -20,13 +21,14 @@ const Consumables = lazy(() => import("./components/consumables/Consumables"));
 const Tags = lazy(() => import("./components/Tags"));
 
 function App() {
+  const { t } = useTranslation();
   const defaultActiveTab = 0;
   let [activeTab, setActiveTab] = useState<Tabs>(defaultActiveTab);
   const tabs = [
-    { title: "jokers", path: "/jokers" },
-    { title: "modifiers", path: "/modifiers" },
-    { title: "consumables", path: "/consumables" },
-    { title: "tags", path: "/tags" },
+    { title: t("jokers"), path: "/jokers" },
+    { title: t("modifiers"), path: "/modifiers" },
+    { title: t("consumables"), path: "/consumables" },
+    { title: t("tags"), path: "/tags" },
   ];
 
   const updateActiveTab = (tab: Tabs) => {

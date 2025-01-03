@@ -3,6 +3,7 @@ import { Tabs } from "../types";
 import { SearchBar } from "./SearchBar";
 import { ThemeToggle } from "./ThemeToggle";
 import { appName } from "../siteConfig";
+import { LangToggle } from "./LangToggle";
 
 export const Navigation = ({
   tabs,
@@ -19,13 +20,26 @@ export const Navigation = ({
         href="/"
         className="h-auto flex flex-col items-center justify-center mb-8 select-none w-60 mx-auto"
       >
-        <img className="w-40 h-10" src="/Site-logo.webp" alt={appName} />
-        {/* <span id="logo-title" className="text-[0.50rem] text-[#666666]">
-          Wiki
-        </span> */}
+        <img
+          className="w-20 h-8 md:w-40 md:h-10"
+          src="/Site-logo.webp"
+          alt={appName}
+        />
+        <span id="logo-title" className="text-[0.50rem] text-[#666666]">
+          Wiki 1.0
+        </span>
       </a>
-      <div className="top-0 right-0 absolute space-x-2 z-50">
+      <div className="top-0 right-0 absolute space-x-2 z-50 hidden md:flex">
+        <LangToggle />
         <ThemeToggle />
+      </div>
+
+      <div className="top-0 left-0 absolute md:hidden z-50">
+        <ThemeToggle />
+      </div>
+
+      <div className="top-0 right-0 absolute md:hidden z-50">
+        <LangToggle />
       </div>
 
       <div className="mb-8 flex flex-col md:flex-row items-center justify-center gap-x-2 w-full">

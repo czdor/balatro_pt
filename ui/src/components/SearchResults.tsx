@@ -1,8 +1,11 @@
 import { Fragment, memo } from "react";
+import { useTranslation } from "react-i18next";
 
 export const SearchResults = memo(({ results }: { results: any }) => {
+  const { t } = useTranslation();
+
   return (
-    <div className="py-4 w-full rounded-xl bg-light-white dark:bg-dark-secondary mt-3 absolute min-h-20 z-50 px-4 text-left shadow-lg">
+    <div className="py-4 w-full rounded-xl bg-light-white dark:bg-dark-secondary mt-3 absolute min-h-20 z-40 px-4 text-left shadow-lg">
       {results && results ? (
         <ul className="list-none overflow-y-scroll max-h-96 search-scrollbar dark:search-scrollbar-dark">
           {Object.keys(results).map((title: string, idx: number) => (
@@ -42,8 +45,8 @@ export const SearchResults = memo(({ results }: { results: any }) => {
         </ul>
       ) : (
         <Fragment>
-          <p className="font-semibold mb-4">Recent searches</p>
-          <span>No recent searches</span>
+          <p className="font-semibold mb-4">{t("recentSearchesMessage")}</p>
+          <span>{t("noRecentSearchesMessage")}</span>
         </Fragment>
       )}
     </div>

@@ -1,0 +1,62 @@
+{
+    "jokers": "Jokers",
+    "modifiers": "Modificadores",
+    "consumables": "Consumibles",
+    "tags": "Etiquetas",
+    "searchMessage": "Buscar...",
+    "recentSearchesMessage": "Búsquedas recientes",
+    "noRecentSearchesMessage": "No hay búsquedas recientes",
+    
+    "joker": "Joker",
+    "effect": "Efecto",
+    "cost": "Costo",
+    "rarity": "Rareza",
+    "requirement": "Requerimento",
+    "type": "Tipo",
+
+    "listOf": "Lista de",
+
+    "builtBy": "Hecho por",
+
+    "+c": "Fichas",
+    "+m": "Mult sumativo",
+    "Xm": "Mult multiplicativo",
+    "++": "Fichas & Mult multiplicativo",
+    "!!": "Efectos",
+    "...": "Disparadores",
+    "+$": "Economía",
+
+    "seals": "Sellos",
+    "seal": "Sello",
+
+    "enhancements": "Mejoras",
+    "enhancement": "Mejora",
+
+    "editions": "Ediciones",
+    "edition": "Edicion",
+
+    "description": "Descripción",
+
+    "tarotCards": "Cartas de Tarot",
+    "tarot": "Tarot",
+
+    "spectralCards": "Cartas Espectrales",
+    "spectral": "Espectral",
+
+    "planetCards": "Cartas Planetarias",
+    "planet": "Planeta",
+
+    "PokerHand": "Mano de Póker",
+    "HandBaseScore": "Puntuación base",
+
+    "addition": "Mejora",
+
+    "ante": "Apuesta",
+    "notes": "Notas",
+    "benefit": "Beneficio",
+    "tag": "Etiqueta",
+
+    "vouchers": "Vales",
+    "voucher": "Vale",
+    "unlocksWhen": "Se desbloquea al"
+}
